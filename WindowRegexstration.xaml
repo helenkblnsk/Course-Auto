@@ -1,0 +1,37 @@
+<Window x:Class="Course_Lena.WindowRegestration"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Course_Lena"
+        mc:Ignorable="d"
+        Title="Регестрация" Height="350" Width="250">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"></RowDefinition>
+            <RowDefinition Height="60"></RowDefinition>
+            <RowDefinition Height="60"></RowDefinition>
+            <RowDefinition Height="60"></RowDefinition>
+            <RowDefinition Height="60"></RowDefinition>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0">
+            <TextBlock Margin="5" Height="20" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Center">Введите Ваше имя:</TextBlock>
+            <TextBox x:Name="textBoxFirstName" Margin="5" Height="20" Width="200" FontSize="11" VerticalAlignment="Center" HorizontalAlignment="Left">first_name</TextBox>
+        </StackPanel>
+        <StackPanel Grid.Row="1">
+            <TextBlock Margin="5" Height="20" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Center">Введите Вашу фамилию:</TextBlock>
+            <TextBox x:Name="textBoxSecondName" Margin="5" Height="20" Width="200" FontSize="11" VerticalAlignment="Center" HorizontalAlignment="Left">second_name</TextBox>
+        </StackPanel>
+        <StackPanel Grid.Row="2" VerticalAlignment="Top">
+            <TextBlock Margin="5" Height="20" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Center">Введите логин:</TextBlock>
+            <TextBox x:Name="textBoxLogin" Margin="5" Height="20" Width="200" FontSize="11" VerticalAlignment="Center" HorizontalAlignment="Left">login</TextBox>
+        </StackPanel>
+        <StackPanel Grid.Row="3">
+            <TextBlock Margin="5" Height="20" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Center">Введите пароль:</TextBlock>
+            <PasswordBox PasswordChar="*" x:Name="textBoxPassWord" Margin="5" Height="20" Width="200" FontSize="11" VerticalAlignment="Center" HorizontalAlignment="Left"></PasswordBox>
+        </StackPanel>
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="4">
+            <Button Height="25" Width="100" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Button_Click">Подтвердить</Button>
+        </StackPanel>
+    </Grid>
+</Window>
