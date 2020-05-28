@@ -1,0 +1,43 @@
+<Page x:Class="Course_Lena.Page1"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Course_Lena"
+      mc:Ignorable="d" 
+      d:DesignHeight="500" d:DesignWidth="900"
+      Title="Курсовая работа">
+
+    <Grid Background="White" Margin="0,-10,0,10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="450"></ColumnDefinition>
+            <ColumnDefinition Width="450"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="225"></RowDefinition>
+            <RowDefinition Height="225"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Button Margin="40,130,250,15" Click="ButtonFilter_Click_1" Grid.Column="1">
+            Фильтр данных
+        </Button>
+        <Button Margin="0,0,40,10" Click="ButtonAddData_Click_2" HorizontalAlignment="Right" Width="160" Height="80" VerticalAlignment="Bottom">
+            Изменение данных
+        </Button>
+        <Button Margin="0,10,40,0" Grid.Row="1" VerticalAlignment="Top" Height="80" HorizontalAlignment="Right" Width="160" Click="ButtonOwnerShip_Click">
+            <TextBlock Text="О приложение      Авторские права" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap"></TextBlock>
+        </Button>
+        <Button Grid.Column="1" HorizontalAlignment="Left" Margin="40,10,0,0" Grid.Row="1" VerticalAlignment="Top" Height="80" Width="160" Click="Button_Click">
+            <TextBlock Text="Инструкция по эксплотации" VerticalAlignment="Center" HorizontalAlignment="Center"  TextWrapping="Wrap"></TextBlock>
+        </Button>
+        <TextBlock Foreground="Black" HorizontalAlignment="Left" Margin="334,188,0,0" Grid.Row="1" Text="ОНПУ ИКС ЕАТ-193 2020 " TextWrapping="Wrap" VerticalAlignment="Top" Grid.ColumnSpan="2" FontSize="20" Height="27" Width="232"/>
+        <Button x:Name="buttonLog_In" Grid.Row="1" Grid.Column="0" Margin="175,113,130,62" Click="buttonLog_In_Click">
+            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Авторизоваться"/>
+        </Button>
+        <Button x:Name="buttonLog_Out" Grid.Row="1" Margin="130,113,165,62" Grid.Column="1" Click="ButtonLog_Out_Click">
+            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Выйти"/>
+        </Button>
+        <Button x:Name="buttonRegestration" Grid.Row="1" Margin="340,113,340,62" Grid.ColumnSpan="2" Click="ButtonRegestration_Click">
+            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"  Text="Зарегестрироваться"/>
+        </Button>
+    </Grid>
+</Page>
