@@ -151,7 +151,7 @@ namespace Course_Lena
                 return;
             XElement selProduct = (XElement)listboxPropducts.SelectedItem;
             XElement newPropduct = ParkCard.GetXElement(IDTextBox, NumberTextBox, First_NameTextBox, Second_NameTextBox, Paid_Or_NoComboBox, Car_ModelTextBox, Car_NumTextBox);
-            //if (selProduct != null)
+            if (selProduct != null)
             try { selProduct.Remove(); } catch (NullReferenceException nullexception) { MessageBox.Show(nullexception.Message); }
             SaveXDocument();
             AddNewXElemetInXMLDocument(newPropduct);
@@ -214,7 +214,7 @@ namespace Course_Lena
             else
                 tempParkcard = new ParkCard(ParkCard.RandomID(this.parking), parking.GetFreeParkPLace(), First_NameTextBox.Text, Second_NameTextBox.Text, bool.Parse(Paid_Or_NoComboBox.Text), Car_ModelTextBox.Text, Car_NumTextBox.Text);
 
-            NumberTextBox.Text = temp.ParkPlace.ToString();
+            NumberTextBox.Text = tempParkcard.ParkPlace.ToString();
             IDTextBox.Text = tempParkcard.ID.ToString();
 
             XElement newPropduct = ParkCard.GetXElement(IDTextBox, NumberTextBox, First_NameTextBox, Second_NameTextBox, Paid_Or_NoComboBox, Car_ModelTextBox, Car_NumTextBox);
