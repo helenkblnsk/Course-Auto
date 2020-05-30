@@ -12,8 +12,6 @@ namespace Course_Lena
             {
                 if (!File.Exists("parkingDate.xml"))
                 {
-                    FileInfo fileInfo = new FileInfo("parkingDate.xml");
-                    fileInfo.Create();
                     var xdoc = XDocument.Load("parkingDate.xml");
                     xdoc.Add(new XElement("Parking", new XAttribute("IDCode", "bjhdchbjd")));
                     xdoc.Save("parkingDate.xml");
