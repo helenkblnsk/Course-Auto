@@ -1,0 +1,221 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Xml.Linq;
+
+namespace Course_Lena
+{
+    class Parking : ICollection
+    {
+        private ParkCard[] parkCards = new ParkCard[50];
+        readonly bool[] parkPlace;
+
+        private XElement xElement = null;
+
+        public Parking(XDocument XDocument)
+        {
+            xElement = XDocument.Root;
+            parkCards = GetParkCards(XDocument);
+            parkPlace = ParkPlaceLoad(XDocument.Root);
+        }
+
+        public Parking(ParkCard[] parkCards, XDocument xDocument)
+        {
+            this.parkCards = parkCards;
+            xElement = xDocument.Root;
+        }
+
+        public Parking()
+        {
+        }
+
+        public int GetCountFreePlace(out string parkplacestring)
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+            var temp = new List<int>();
+            for (int i = 0; i < parkPlace.Length; i++)
+            {
+                if (!parkPlace[i])
+                {
+                    temp.Add(i);
+                }
+            }
+
+            stringBuilder.Append($"Количество свободных мест - {temp.Count}\nCвободные места :");
+            for (int i = 0; i < temp.Count; i++)
+            {
+                stringBuilder.Append($"{temp[i]},");
+                if (i % 10 == 0 && i != 0)
+                {
+                    stringBuilder.Append($"\n{new string(' ', 30)}");
+                }
+
+            }
+            parkplacestring = stringBuilder.ToString();
+            return temp.Count;
+        }
+
+        public int GetFreeParkPLace()
+        {
+            Random random = new Random((int)DateTime.Now.Ticks);
+            int i;
+            for (; ; )
+            {
+                i = random.Next(0, parkPlace.Length - 1);
+                if (!parkPlace[i])
+                {
+                    parkPlace[i] = true;
+                    return i;
+                }
+            }
+            throw new Exception("None free place");
+        }
+
+        public bool[] ParkPlaceLoad(XElement xElement)
+        {
+            var result = from data in xElement.Descendants("Number")
+                         select data;
+            var tempIntBool = new int[result.Count()];
+            foreach (var item in result)
+            {
+                for (int i = 0; i < tempIntBool.Length; i++)
+                {
+                    if (tempIntBool[i] == 0)
+                    {
+                        tempIntBool[i] = int.Parse(item.Value);
+                        break;
+                    }
+                }
+            }
+            var temp = new bool[50];
+            for (int i = 0; i < temp.Length; i++)
+            {
+                temp[i] = false;
+            }
+            for (int i = 0; i < tempIntBool.Length; i++)
+            {
+                temp[tempIntBool[i]] = true;
+            }
+            return temp;
+        }
+
+        public static ParkCard[] GetParkCards(XDocument XDocument)
+        {
+            var apartms = from a in XDocument.Descendants("IDParkCard")
+                          select a;
+            ParkCard[] parkCards = new ParkCard[apartms.Count()];
+            ParkCard temp;
+            foreach (XElement item in apartms)
+            {
+                temp = new ParkCard(
+                    item.Element("ID").Value,
+                    int.Parse(item.Element("Number").Value),
+                    item.Element("First_Name").Value,
+                    item.Element("Second_Name").Value,
+                    bool.Parse(item.Element("Paid_or_No").Value.ToLower()),
+                    item.Element("Car_Model").Value,
+                    item.Element("Car_Num").Value
+                    );
+                for (int i = 0; i < parkCards.Length; i++)
+                {
+                    if (parkCards[i] == null)
+                    {
+                        parkCards[i] = temp;
+                        break;
+                    }
+                }
+            }
+            return parkCards;
+        }
+
+        public XElement[] GetXElement()
+        {
+            int i = 0;
+            XElement[] temp = new XElement[parkCards.Length];
+            foreach (var parkPlace in parkCards)
+            {
+                i++;
+                temp[i] = parkPlace.XElementFromInstance();
+            }
+            return temp;
+        }
+
+        public static Parking GetParkCards(IEnumerable<XElement> xElements)
+        {
+            Parking parkCards = new Parking();
+            ParkCard temp;
+            foreach (XElement item in xElements)
+            {
+                temp = new ParkCard(
+                    item.Element("ID").Value,
+                    int.Parse(item.Element("Number").Value),
+                    item.Element("First_Name").Value,
+                    item.Element("Second_Name").Value,
+                    bool.Parse(item.Element("Paid_or_No").Value),
+                    item.Element("Car_Model").Value,
+                    item.Element("Car_Num").Value
+                    );
+                parkCards.Add(temp);
+            }
+            return parkCards;
+        }
+
+        public int Count => parkCards.Length;
+
+        public bool IsReadOnly => false;
+
+        public bool IsSynchronized => throw new NotImplementedException();
+
+        public object SyncRoot => throw new NotImplementedException();
+
+        internal ParkCard[] ParkCards { get => parkCards; set => parkCards = value; }
+
+        public void Add(ParkCard item)
+        {
+            var newArray = new ParkCard[parkCards.Length + 1];
+            parkCards.CopyTo(newArray, 0);
+            newArray[^1] = item;
+            parkCards = newArray;
+            xElement.Add(item.XElementFromInstance());
+        }
+
+        public void Clear()
+        {
+            parkCards = new ParkCard[0];
+            xElement = null;
+        }
+
+        public bool Contains(ParkCard item)
+        {
+            foreach (var parkPlace in parkCards)
+            {
+                if (parkPlace.Equals(item))
+                    return true;
+            }
+
+            return false;
+        }
+
+        public void CopyTo(ParkCard[] array, int arrayIndex)
+        {
+            parkCards.CopyTo(array, arrayIndex);
+        }
+
+        public bool Remove(ParkCard item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerator GetEnumerator()
+        {
+            return parkCards.GetEnumerator();
+        }
+
+        public void CopyTo(Array array, int index)
+        {
+            throw new NotImplementedException();
+        }
+    }
+}
