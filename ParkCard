@@ -1,0 +1,119 @@
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Windows.Controls;
+using System.Xml;
+using System.Xml.Linq;
+
+namespace Course_Lena
+{
+    class ParkCard
+    {
+        private string iD;
+        private int parkPlace;
+        private string firstName;
+        private string secondName;
+        private bool paidOrNo;
+        private string carModel;
+        private string carNum;
+
+        public ParkCard()
+        {
+        }
+
+        public ParkCard(string ID, string firstName, string secondName, bool paidOrNo, string carModel, string carNum)
+        {
+            this.ID = ID;
+            FirstName = firstName;
+            SecondName = secondName;
+            PaidOrNo = paidOrNo;
+            CarModel = carModel;
+            CarNum = carNum;
+        }
+        public ParkCard(string ID, int parkPlace, string firstName, string secondName, bool paidOrNo, string carModel, string carNum)
+        {
+            this.ID = ID;
+            this.ParkPlace = parkPlace;
+            FirstName = firstName;
+            SecondName = secondName;
+            PaidOrNo = paidOrNo;
+            CarModel = carModel;
+            CarNum = carNum;
+        }
+        public ParkCard( string firstName, string secondName, bool paidOrNo, string carModel, string carNum)
+        {
+            FirstName = firstName;
+            SecondName = secondName;
+            PaidOrNo = paidOrNo;
+            CarModel = carModel;
+            CarNum = carNum;
+        }
+
+        public int ParkPlace { get => parkPlace; private set => parkPlace = value; }
+        public string FirstName { get => firstName; private set => firstName = value; }
+        public string SecondName { get => secondName; private set => secondName = value; }
+        public bool PaidOrNo { get => paidOrNo; private set => paidOrNo = value; }
+        public string CarModel { get => carModel; private set => carModel = value; }
+        public string CarNum { get => carNum; private set => carNum = value; }
+        public string ID { get => iD; private set => iD = value; }
+
+        public static string RandomID(Parking parking)
+        {
+            var temp = new Random((int)DateTime.Now.Ticks).Next(10_000_000).ToString() + new Random((int)DateTime.Now.Ticks).Next(10_000_000).ToString();
+            if (temp.Length < 16)
+                return string.Format(temp.Insert(0,new string('0',16-temp.Length)));
+            foreach (ParkCard item in parking)
+            {
+                if (item.ID==temp)
+                {
+                    RandomID(parking);
+                }
+            }
+            return string.Format(temp);
+        }
+
+        public XElement XElementFromInstance()
+        {
+            return new XElement("IDParkCard",
+                new XElement("ID", iD),
+                new XElement("Number", ParkPlace),
+                new XElement("First_Name", FirstName),
+                new XElement("Second_Name", SecondName),
+                new XElement("Paid_or_No", PaidOrNo),
+                new XElement("Car_Model", CarModel),
+                new XElement("Car_Num", CarNum)
+                );
+        }
+
+        public static XElement GetXElement(TextBox textBoxID, TextBox textBoxNumber,TextBox textBoxFirstName, TextBox textBoxSecondName, ComboBox comboBoxPaid_or_No, TextBox textBoxModelCar, TextBox textBoxCarNum)
+        {
+            return new XElement("IDParkCard",
+                           new XElement("ID", textBoxID.Text),
+                           new XElement("Number", textBoxNumber.Text),
+                           new XElement("First_Name", textBoxFirstName.Text),
+                           new XElement("Second_Name", textBoxSecondName.Text),
+                           new XElement("Paid_or_No", comboBoxPaid_or_No.Text),
+                           new XElement("Car_Model", textBoxModelCar.Text),
+                           new XElement("Car_Num", textBoxCarNum.Text)
+                                );
+        }
+        public override string ToString()
+        {
+            return string.Format("{0,16}|{1,16}|{2,16}|{3,2}|{4,5}|{5,10}|{6,6}|",this.ID,this.FirstName,this.SecondName,this.ParkPlace,this.PaidOrNo,this.CarModel,this.CarNum);
+        }
+
+        public string FileString()
+        {
+            return string.Format($@"
+            ID - {ID} ;
+            First Name - {FirstName} ;
+            Second Name - {SecondName} ;
+            Park Place - {ParkPlace} ;
+            Paid this month - {paidOrNo}
+            Car - {CarModel} ;
+            Car Plate Number - {CarNum}");
+        }
+    }
+}
+
+
